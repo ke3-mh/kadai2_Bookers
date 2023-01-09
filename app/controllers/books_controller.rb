@@ -1,6 +1,7 @@
 class BooksController < ApplicationController
 
-  Suc = "Book was successfully created."
+  Suc_create = "Book was successfully created."
+  Suc_update = "Book was successfully updated."
 
   def top
   end
@@ -17,7 +18,7 @@ class BooksController < ApplicationController
     @books = Book.all
     @book = Book.new(book_params)
     if @book.save
-      flash[:notice] = Suc
+      flash[:notice] = Suc_create
       redirect_to book_path(@book.id)
     else
       # redirect_to '/books'
@@ -36,8 +37,8 @@ class BooksController < ApplicationController
   def update
     @book = Book.find(params[:id])
     if @book.update(book_params)
-      flash[:notice] = Suc
-      redirect_to book_path(book.id)
+      flash[:notice] = Suc_update
+      redirect_to book_path(@book.id)
     else
       render :edit
     end
