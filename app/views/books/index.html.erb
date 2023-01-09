@@ -34,20 +34,57 @@
       <% end %>
     </ul>
   </div>
-<% end %>
 
-<%= form_with model: @book, url: '/books', method: :post, class: :new_book do |f| %>
+  <%= form_with model: @book do |f| %>
+    <% if @book.errors[:title].any? == true && @book.errors[:body].any? == false %>
+      <div class="error_field">
+        <%= f.label :title, "Title" %>
+        <%= f.text_field :title %>
+      </div>
+      <div class="field">
+        <%= f.label :body, "Body" %>
+        <%= f.text_area :body %>
+      </div>
 
-  <div class="field">
-    <%= f.label :title, "Title" %>
-    <%= f.text_field :title %>
-  </div>
+    <% elsif @book.errors[:title].any? == false && @book.errors[:body].any? == true %>
+      <div class="field">
+        <%= f.label :title, "Title" %>
+        <%= f.text_field :title %>
+      </div>
+      <div class="error_field">
+        <%= f.label :body, "Body" %>
+        <%= f.text_area :body %>
+      </div>
 
-  <div class="field">
-    <%= f.label :body, "Body" %>
-    <%= f.text_area :body %>
-  </div>
+    <% else %>
+      <div class="error_field">
+        <%= f.label :title, "Title" %>
+        <%= f.text_field :title %>
+      </div>
 
-  <%= f.submit 'Create Book' %>
+      <div class="error_field">
+        <%= f.label :body, "Body" %>
+        <%= f.text_area :body %>
+      </div>
+    <% end %>
 
+    <%= f.submit 'Create Book' %>
+
+  <% end %>
+
+<% else %>
+  <%= form_with model: @book do |f| %>
+    <div class="field">
+      <%= f.label :title, "Title" %>
+      <%= f.text_field :title %>
+    </div>
+
+    <div class="field">
+      <%= f.label :body, "Body" %>
+      <%= f.text_area :body %>
+    </div>
+
+    <%= f.submit 'Create Book' %>
+  
+  <% end %>
 <% end %>
